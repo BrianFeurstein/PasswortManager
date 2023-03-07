@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Button
 import { sha256 } from 'js-sha256';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-addNewItemToList.navigationOptions = () => {
+editObject.navigationOptions = () => {
     return {
         headerStyle: {
             backgroundColor: '#000',
@@ -15,15 +15,30 @@ addNewItemToList.navigationOptions = () => {
 };
 
 
-export default function addNewItemToList({ navigation }) {
+export default function editObject({ navigation }) {
+    const [selectedItem, setSelectedItem] = useState({});
     const [title, setTitle] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [comment, setComment] = useState("");
     const [objectList, setObjectList] = useState([]);
+    
+    useEffect(()=>{
+        const getSelectedItem = navigation.getParam('mySelectedItem');
+        setSelectedItem(getSelectedItem);
 
-   
+    },[]);
+
+    useEffect(()=>{
+        setTitle(selectedItem['title']);
+        setUsername(selectedItem['username']);
+        setEmail(selectedItem['email']);
+        setPassword(selectedItem['password']);
+        setComment(selectedItem['comment']);
+    },[selectedItem])
+
+
     const output = () => {
         if (title == "") {
             Alert.alert(
@@ -47,14 +62,13 @@ export default function addNewItemToList({ navigation }) {
         }
         else {
             const newObject = {
-                id: objectList.length + 1,
+                
                 title: title,
                 username: username,
                 password: password,
-                email: email,
                 comment: comment
             }
-            setObjectList([...objectList, newObject]);
+            //setObjectList([...objectList, newObject]);
             
 
 
@@ -63,13 +77,13 @@ export default function addNewItemToList({ navigation }) {
     }
 
     const back = () => {
-        navigation.navigate('HomePage', { myObject: objectList });
+        //navigation.navigate('HomePage', { myObject: objectList });
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         AsyncStorage.setItem('myObjektsInStorage', JSON.stringify(objectList));
         navigation.navigate('HomePage', { myObject: objectList });
-    }, [objectList]);
+    }, [objectList]);*/
 
 
     return (

@@ -6,19 +6,18 @@ import LoginPage from './components/LoginPage';
 import Regristration from './components/Regrestrieren/Regristration';
 import HomePage from './components/HomePage';
 import addNewItemToList from './components/addNewItemToList';
-
+import editObject from './components/editObject';
 
 
 const Navigator = createStackNavigator({
-    LoginPage: { screen: LoginPage }, //muss ganz oben stehen
-    
-    
-    Regristration: { screen: Regristration },
-    addNewItemToList: { screen: addNewItemToList },
-    HomePage: { screen: HomePage },
-    
-    
+  addNewItemToList: { screen: addNewItemToList },
+  editObject: {screen: editObject},
+  HomePage: { screen: HomePage },
+  Regristration: { screen: Regristration },
+  LoginPage: { screen: LoginPage },
+  
 });
+
 
 
 const App = createAppContainer(Navigator);

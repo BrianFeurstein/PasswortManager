@@ -2,23 +2,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Button, Dimensions } from 'react-native';
 
-export default function HomePage({ navigation }) {
+HomePage.navigationOptions = () => {
+  return {
+    title: 'Passwort Manager',
+    headerStyle: {
+      backgroundColor: '#000',
+    },
+    headerTintColor: '#fff',
+    headerShown: false,
+  };
+};
 
+export default function HomePage({ navigation }) {
+  const { navigate, state } = navigation;
   const { width } = Dimensions.get('window');
   const [myObjectsFromStorage, setMyObjectsFromStorage] = useState([]);
-  
+
   const itemWidth = width * 0.8;
 
-  HomePage.navigationOptions = () => {
-    return {
-      title: 'Passwort Manager',
-      headerStyle: {
-        backgroundColor: '#000',
-      },
-      headerTintColor: '#fff',
-      headerShown: false,
-    };
-  };
+
 
   useEffect(() => {
     const loadItems = async () => {
@@ -34,21 +36,25 @@ export default function HomePage({ navigation }) {
   }, []);
 
 
-  const newItem = () => {
-    console.log(navigation);
-    console.log("gedrückt");
-    navigation.navigate('addNewItemToList');
-  };
-
   const handlePress = (index) => {
-    console.log("ich bin item:", index);
+    try{
+
+      const mySelectedItem = myObjectsFromStorage[index];
+      navigation.navigate('editObject',{mySelectedItem:mySelectedItem});
+    }catch(error){
+      console.error(error);
+    }
+    
   };
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text style={styles.title}>Passwort Manager</Text>
+      </View>
       <View style={styles.ScrollView}>
         <ScrollView>
-          {myObjectsFromStorage.map((item, index) => (
+          {myObjectsFromStorage && myObjectsFromStorage.map((item, index) => (
             <TouchableOpacity
               key={index}
               style={[styles.object, { width: itemWidth }]}
@@ -58,11 +64,19 @@ export default function HomePage({ navigation }) {
             </TouchableOpacity>
           ))}
         </ScrollView>
+
       </View>
       <View style={styles.neuerEintragButton}>
         <Button
           title="neuer Eintrag"
-          onPress={newItem}
+          onPress={() => {
+            try{
+              navigation.navigate('addNewItemToList');
+            }catch(error){
+              console.error(error);
+            }
+            
+          }}
         />
       </View>
     </View>
@@ -112,13 +126,13 @@ const styles = StyleSheet.create({
     height: '80%'
   },
 
-  neuerEintragButton:{
+  neuerEintragButton: {
     marginBottom: 0,
     width: '40%',
     borderRadius: 10,
     flexDirection: 'row',
     alignSelf: 'flex-end',
-    
+
   }
 
 });

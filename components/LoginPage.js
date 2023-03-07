@@ -2,6 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Text, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
 import { sha256 } from 'js-sha256';
 
+LoginPage.navigationOptions = () => {
+  return {
+      headerStyle: {
+          backgroundColor: '#000',
+      },
+      headerTintColor: '#fff',
+      headerShown: false,
+     
+  };
+};
+
 export default function LoginPage({ navigation }) {
 
   const [password, setPassword] = useState("");
@@ -10,9 +21,7 @@ export default function LoginPage({ navigation }) {
   const [usedSalt, setSalt] = useState("");
   const [checkInput, setCheckInput] = useState("");
 
-  LoginPage.navigationOptions = {
-    title: 'LoginPage',
-  };
+  
 
   useEffect(() => {
 
@@ -29,7 +38,7 @@ export default function LoginPage({ navigation }) {
     console.log("hashedPassword", hashedPassword);
     if (hashedPassword == null || hashedPassword == "") {
       Alert.alert(
-        "Error",
+        "Warnung",
         "Sie müssen sich zuerst registrieren",
         [
           {
@@ -42,7 +51,7 @@ export default function LoginPage({ navigation }) {
     }
     else if (checkInput == hashedPassword) {
       console.log("super");
-      navigation.navigate('HomePage');
+      navigation.push('HomePage')
     } else {
       Alert.alert(
         "Error",
@@ -53,7 +62,7 @@ export default function LoginPage({ navigation }) {
 
   const handleRegisterPress = () => {
     setIsRegistered(true); // setze den Zustand auf "true" wenn der Button betätigt wird
-    navigation.navigate('Regristration');
+    navigation.push('Regristration');
   };
 
   const setCryptPassword = () => {

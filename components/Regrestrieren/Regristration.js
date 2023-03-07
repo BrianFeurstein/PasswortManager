@@ -2,17 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Text, StyleSheet, Button, Alert } from 'react-native';
 import { sha256 } from 'js-sha256';
 
+Registration.navigationOptions = () => {
+  return {
+      headerStyle: {
+          backgroundColor: '#000',
+      },
+      headerTintColor: '#fff',
+      headerShown: false,
+     
+  };
+};
+
+
 export default function Registration({ navigation }) {
   const { navigate, state } = navigation;
   const [hashedPassword, setHashedPassword] = useState("");
   const [salt, setSalt] = useState("");
 
-  Registration.navigationOptions = () => {
-    return {
-      title: 'Registration',
-    };
-  };
-
+ 
 
 
   return (
