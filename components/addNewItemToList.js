@@ -1,19 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Button, Alert } from 'react-native';
-import { sha256 } from 'js-sha256';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-addNewItemToList.navigationOptions = () => {
-    return {
-        headerStyle: {
-            backgroundColor: '#000',
-        },
-        headerTintColor: '#fff',
-        headerShown: false,
-       
-    };
-};
-
 
 export default function addNewItemToList({ navigation }) {
     const [title, setTitle] = useState("");
@@ -23,7 +10,16 @@ export default function addNewItemToList({ navigation }) {
     const [comment, setComment] = useState("");
     const [objectList, setObjectList] = useState([]);
 
-   
+    addNewItemToList.navigationOptions = () => {
+        return {
+            headerStyle: {
+                backgroundColor: '#000',
+            },
+            headerTintColor: '#fff',
+            headerShown: false,
+            headerTitle: () => { return null },
+        };
+    };
     const output = () => {
         if (title == "") {
             Alert.alert(
@@ -51,15 +47,11 @@ export default function addNewItemToList({ navigation }) {
                 title: title,
                 username: username,
                 password: password,
-                email: email,
-                comment: comment
+                comment: comment,
+                email: email
             }
             setObjectList([...objectList, newObject]);
-            
-
-
         }
-
     }
 
     const back = () => {

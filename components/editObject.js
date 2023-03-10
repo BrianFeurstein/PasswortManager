@@ -62,29 +62,30 @@ export default function editObject({ navigation }) {
         }
         else {
             const newObject = {
-                
+                id: objectList.length + 1,
                 title: title,
                 username: username,
                 password: password,
-                comment: comment
+                comment: comment,
+                email: email,
             }
-            //setObjectList([...objectList, newObject]);
+
+
+            console.log(title);
+            setObjectList([...objectList, newObject]);
+            AsyncStorage.setItem('myObjektsInStorage', JSON.stringify(objectList));
+            navigation.navigate('HomePage', { myObject: objectList });
             
-
-
         }
 
     }
+
 
     const back = () => {
         //navigation.navigate('HomePage', { myObject: objectList });
     }
 
-    /*useEffect(() => {
-        AsyncStorage.setItem('myObjektsInStorage', JSON.stringify(objectList));
-        navigation.navigate('HomePage', { myObject: objectList });
-    }, [objectList]);*/
-
+  
 
     return (
         <ScrollView>
